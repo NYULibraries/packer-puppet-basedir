@@ -1,0 +1,5 @@
+puppet/modules is a blank directory that will be populated
+with module difinitions by librarian-puppet prior to the
+pupept run.  
+
+
