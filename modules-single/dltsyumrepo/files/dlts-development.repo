@@ -1,9 +1,0 @@
-[dlts-development]
-name=dlts-development
-baseurl=http://nexus.dlts.org:8081/nexus/content/repositories/dlts-development
-enabled=1
-protect=0
-gpgcheck=0
-metadata_expire=30s
-autorefresh=1
-type=rpm-md
