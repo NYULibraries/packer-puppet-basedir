@@ -40,6 +40,7 @@ class profiles::base {
     user { 'puppet' :
       ensure => present,
     }
+    include ::gnupg
     class { 'hiera':
       hierarchy => [
         '%{environment}/%{calling_class}',
@@ -47,11 +48,11 @@ class profiles::base {
         'accounts',
         'common',
       ],
-      require => User['puppet'],
+      require   => User['puppet'],
     }
     include housekeeping
     class { 'localtime':
-        zone => "America/New_York",
+        zone => 'America/New_York',
     }
     logrotate::rule { 'messages':
         path         => '/var/log/messages',
