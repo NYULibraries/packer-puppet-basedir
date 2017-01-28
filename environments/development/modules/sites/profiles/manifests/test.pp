@@ -11,9 +11,7 @@
 #
 # Copyright 2016 Your NYULibraries, unless otherwise noted.
 #
-class profiles::test_uqbar (
-  #$fsid = hiera('img_iip:fsid'),
-){
+class profiles::test {
 
   include housekeeping
 
@@ -48,38 +46,8 @@ class profiles::test_uqbar (
     owner      => $::id,
     timeout    => 1800,
   }
-  #python::virtualenv { 'uq venv' :
-  #  ensure     => present,
-  #  version    => 'system',
-  #  systempkgs => true,
-  #  venv_dir   => '/usr/local/virtualenv',
-  #  owner      => $::id,
-  #  group      => $::id,
-  #  cwd        => '/tmp/vtmp',
-  #  timeout    => 0,
-  #  require    => Class['python'],
-  #}
-  #python::pip { 'uq boto3':
-  #  ensure     => present,
-  #  pkgname    => 'boto3',
-  #  virtualenv => '/usr/local/virtualenv',
-  #  owner      => $::id,
-  #  timeout    => 1800,
-  #  require    => Python::Virtualenv['uq venv'],
-  #}
 
   include pyenv
   pyenv::install { ['centos','root']: }
-  #pyenv::compile { 'compile 2.7.11 root' :
-  #  user   => 'root',
-  #  python => '2.7.11',
-  #  global => true,
-  #}
-  #pyenv::compile { 'compile 2.7.11 vagrant' :
-  #  user    => 'vagrant',
-  #  python  => '2.7.11',
-  #  global  => true,
-  #}
-
 
 }

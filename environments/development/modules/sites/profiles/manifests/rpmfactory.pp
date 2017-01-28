@@ -39,8 +39,8 @@ class profiles::rpmfactory {
 
   include rpmbuilder
   include gbp_rpm
-  include pyenv
-  pyenv::install { ['vagrant','root']: }
+  #include pyenv
+  #pyenv::install { ['vagrant','root']: }
   #pyenv::compile { 'compile 2.7.11 root' :
   #  user   => 'root',
   #  python => '2.7.11',
