@@ -1,9 +1,12 @@
-class vim {
+#
+class vim (
+  $user = $vim::params::user
+) inherits vim::params {
   package { 'vim-enhanced':
     ensure => 'installed',
   }
   # install vimrc
-  file { "/root/.vimrc":
+  file { '/root/.vimrc':
     ensure  => file,
     source  => "puppet:///modules/vim/vimrc",
     owner   => 'root',
@@ -11,24 +14,24 @@ class vim {
   }
 
   # make directory for vim setup
-  file { "/root/.vim":
+  file { '/root/.vim':
     ensure  => directory,
     owner  => 'root',
     group  => 'root',
   } 
   
-  file { "/home/centos/.vimrc":
+  file { "/home/${user}/.vimrc":
     ensure  => file,
-    source  => "puppet:///modules/vim/vimrc",
-    owner   => 'centos',
-    group   => 'centos',
+    source  => 'puppet:///modules/vim/vimrc',
+    owner   => $user,
+    group   => $user,
   }
 
   # make directory for vim setup
-  file { "/home/centos/.vim":
+  file { "/home/$user/.vim":
     ensure  => directory,
-    owner  => 'centos',
-    group  => 'centos',
+    owner  => $user,
+    group  => $user,
   } 
   
   file {'/tmp/vim-setup.tar.gz':
@@ -42,7 +45,7 @@ class vim {
     command  	=> '/bin/tar zxf /tmp/vim-setup.tar.gz',
     cwd      	=> '/tmp',
     refreshonly => true,
-    notify      => Exec['install vim-setup-root', 'install vim-setup-centos'],
+    notify      => Exec['install vim-setup-root', "install vim-setup-${user}"],
   }
 
   exec {'install vim-setup-root':
@@ -54,12 +57,12 @@ class vim {
     #notify      => Exec['cleanup vim-setup']
   }
 
-  exec {'install vim-setup-centos':
+  exec {"install vim-setup-${user}":
     cwd         => '/tmp/vim-setup/',
-    command     => '/bin/cp -r * /home/centos/.vim',
+    command     => "/bin/cp -r * /home/${user}/.vim",
     logoutput   => true,
     refreshonly => true,
-    require     => File['/home/centos/.vim'],
+    require     => File["/home/${user}/.vim"],
     #notify     => Exec['cleanup vim-setup'],
   }
 

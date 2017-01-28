@@ -1,6 +1,7 @@
+#
 class housekeeping (
-    $user = 'centos'
-) {
+    $user = $housekeeping::params::user
+) inherits housekeeping::params {
 
   ensure_packages([
     'bzip2-devel',
@@ -27,37 +28,15 @@ class housekeeping (
     'zlib-devel',
   ])
 
-  file { '/home/root':
-    ensure => link,
-    target => '/root',
-  }
+  #file { '/home/root':
+  #  ensure => link,
+  #  target => '/root',
+  #}
 
-  file { '/root/.bashrc':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    source => 'puppet:///modules/housekeeping/rootbashrc',
-  }
+  housekeeping::user{ 'root': }
+  housekeeping::user{ 'vagrant': }
 
-  file { '/root/.gemrc':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    source => 'puppet:///modules/housekeeping/gemrc',
-  }
-
-  file { "/home/${user}/.bashrc":
-    ensure => file,
-    source => 'puppet:///modules/housekeeping/bashrc',
-    owner  => "${$user}",
-    group  => "${$user}",
-  }
-
-  file { "/home/${user}/.gemrc":
-    ensure => file,
-    source => 'puppet:///modules/housekeeping/gemrc',
-    owner  => "${$user}",
-    group  => "${$user}",
-  }
+  housekeeping::gemrc{ 'root': }
+  housekeeping::gemrc{ 'vagrant': }
 
 }

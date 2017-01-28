@@ -22,6 +22,10 @@ node /solr-server/ {
   include roles::solr
 }
 
+node /test-rvm/ {
+  include roles::test_rvm
+}
+
 node /uqbar/ {
   include roles::uqbar
 }
