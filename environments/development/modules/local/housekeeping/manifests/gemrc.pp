@@ -8,6 +8,12 @@ define housekeeping::gemrc {
   }
   $user = $title
 
+  file { "${home_dir}/.gemrc" :
+    ensure => present,
+    owner  => $title,
+    group  => $title,
+    mode   => '0644',
+  }
   file_line { "${title} no-doc":
     path => "${home_dir}/.gemrc",
     line => 'gem: --no-document',
