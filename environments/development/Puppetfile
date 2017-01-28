@@ -26,8 +26,13 @@ mod 'stahnma/epel',
 #    :git => 'git://github.com/NYULibraries/puppet-fedora_repository'
 #    #:tag => '0.1.0'
 
+mod 'n1tr0g/gnupg',
+    :git => 'git://github.com/n1tr0g/golja-gnupg.git',
+    :tag => '1.2.3'
+
 mod 'puppetlabs/inifile',
-    :git => 'git://github.com/puppetlabs/puppetlabs-inifile'
+    :git => 'git://github.com/puppetlabs/puppetlabs-inifile.git',
+    :tag => '1.6.0'
 
 mod 'voxpupuli/hiera',
         :git => 'https://github.com/voxpupuli/puppet-hiera.git',
