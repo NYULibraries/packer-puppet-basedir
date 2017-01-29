@@ -7,7 +7,7 @@ class vim::params {
           if $facts['virtual'] == 'virtualbox' {
             $user = 'vagrant'
           }
-          elsif $facts['xenu'] == 'xenu' {
+          elsif $facts['virtual'] == 'xenu' {
             $user = 'centos'
           }
         }
