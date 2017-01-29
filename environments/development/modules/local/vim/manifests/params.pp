@@ -1,23 +1,26 @@
+#
 class vim::params {
 
-  case $facts['osfamily'] {
+  case $facts['os']['family'] {
     'RedHat': {
       case $facts['os']['release']['major'] {
         '7': {
-          if $facts['virtual'] == 'virtualbox' {
-            $user = 'vagrant'
-          }
-          elsif $facts['virtual'] == 'xenu' {
-            $user = 'centos'
-          }
+          case $facts['virtual'] {
+            'xenu':       { $user = 'centos' }
+            'xenhvm':     { $user = 'centos' }
+            'virtualbox': { $user = 'vagrant' }
+            default:  {
+              fail("Virtualization platform ${facts['virtual']} is not supported at this time")
+            }
+          } # End case 3
         }
         default: {
-          fail( "${facts['os']} $facts{['os']['release']['major']} is not supported at this time" )
+          fail( "${facts['os']} ${facts['os']['release']['major']} is not supported at this time" )
         }
-      }
+      } # End case 2
     }
     default: {
-      fail( "${facts['osfamily']} not supported at this time" )
+      fail( "${facts['os']} ${facts['os']['release']['major']} is not supported at this time" )
     }
-  }
+  } # End case
 }
