@@ -34,9 +34,9 @@ class housekeeping (
   #}
 
   housekeeping::user{ 'root': }
-  housekeeping::user{ 'vagrant': }
+  housekeeping::user{ 'centos': }
 
   housekeeping::gemrc{ 'root': }
-  housekeeping::gemrc{ 'vagrant': }
+  housekeeping::gemrc{ 'centos': }
 
 }
