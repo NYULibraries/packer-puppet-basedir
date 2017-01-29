@@ -1,5 +1,7 @@
 class housekeeping::params {
 
+  $user = 'centos'
+
   case $facts['osfamily'] {
     'RedHat': {
       case $facts['os']['release']['major'] {
@@ -7,7 +9,7 @@ class housekeeping::params {
           if $facts['virtual'] == 'virtualbox' {
             $user = 'vagrant'
           }
-          elsif $facts['xenu'] == 'xenu' {
+          elsif $facts['virtual'] == 'xenu' {
             $user = 'centos'
           }
         }
