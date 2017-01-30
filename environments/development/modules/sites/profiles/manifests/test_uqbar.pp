@@ -68,18 +68,26 @@ class profiles::test_uqbar (
   #  require    => Python::Virtualenv['uq venv'],
   #}
 
-  include pyenv
-  pyenv::install { ['centos','root']: }
-  #pyenv::compile { 'compile 2.7.11 root' :
-  #  user   => 'root',
+  #include pyenv
+  #pyenv::install { ['centos']: }
+  #pyenv::compile { 'compile 2.7.11 centos' :
+  #  user   => 'centos',
   #  python => '2.7.11',
   #  global => true,
   #}
-  #pyenv::compile { 'compile 2.7.11 vagrant' :
-  #  user    => 'vagrant',
-  #  python  => '2.7.11',
-  #  global  => true,
+  #file_line { 'centos PYENV_ROOT':
+  #  path => '/home/centos/.bashrc',
+  #  line => 'export PYENV_ROOT="$HOME/.pyenv"',
   #}
+  #file_line { 'centos PYENV_PATH':
+  #  path => '/home/centos/.bashrc',
+  #  line => 'export PATH="$PYENV_ROOT/bin:$PATH"',
+  #}
+
+  # daenney puppet-pyenv
+  include pyenv
+  pyenv_python { '2.7.13': }
+  pyenv_python { '3.6.0': }
 
 
 }
