@@ -127,9 +127,9 @@ mod 'puppetlabs/firewall',
 #    :git => 'git://github.com/Sliim/puppet-pyenv.git',
 #    :tag => '0.1.1'
 
-mod 'daenny/pyenv',
-    :git => 'git://github.com/daenny/puppet-pyenv.git',
-    :tag => 'v0.9.2'
+#mod 'daenney/pyenv',
+mod 'flannon/pyenv',
+    :git => 'git://github.com/flannon/puppet-pyenv.git'
 
 mod 'Mylezeem/repoforge', 
      :git => 'git://github.com/Mylezeem/puppet-repoforge.git',

@@ -86,8 +86,8 @@ class profiles::test_uqbar (
 
   # daenney puppet-pyenv
   include pyenv
-  pyenv_python { '2.7.13': }
-  pyenv_python { '3.6.0': }
+  #pyenv_python { '2.7.13': }
+  #pyenv_python { '3.6.0': }
 
 
 }
