@@ -32,22 +32,22 @@ class profiles::test_uqbar (
   #package { 'centos-release-scl':
   #  ensure => installed,
   #}
-  class { 'python':
-    version    => 'system',
-    pip        => 'present',
-    dev        => 'present',
-    virtualenv => 'present',
-    gunicorn   => 'absent',
-    use_epel   => true,
-  }
+  #class { 'python':
+  #  version    => 'system',
+  #  pip        => 'present',
+  #  dev        => 'present',
+  #  virtualenv => 'present',
+  #  gunicorn   => 'absent',
+  #  use_epel   => true,
+  #}
   #  Make sure pip is latest.
-  python::pip { 'pip':
-    ensure     => latest,
-    pkgname    => 'pip',
-    virtualenv => 'system',
-    owner      => $::id,
-    timeout    => 1800,
-  }
+  #python::pip { 'pip':
+  #  ensure     => latest,
+  #  pkgname    => 'pip',
+  #  virtualenv => 'system',
+  #  owner      => $::id,
+  #  timeout    => 1800,
+  #}
   #python::virtualenv { 'uq venv' :
   #  ensure     => present,
   #  version    => 'system',

@@ -18,6 +18,10 @@ node /nexus/ {
   include roles::nexus
 }
 
+node /puppet4/ {
+  include roles::puppet4
+}
+
 node /solr-server/ {
   include roles::solr
 }

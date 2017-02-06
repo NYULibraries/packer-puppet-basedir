@@ -36,7 +36,6 @@ class profiles::base {
       require    => Class['hiera'],
     }
 
-    include epel
     user { 'puppet' :
       ensure => present,
     }

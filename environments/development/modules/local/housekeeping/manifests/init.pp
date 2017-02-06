@@ -3,40 +3,18 @@ class housekeeping (
     $user = $housekeeping::params::user
 ) inherits housekeeping::params {
 
-  ensure_packages([
-    'bzip2-devel',
-    'bind-utils',
-    'epel-release',
-    'gdbm-devel',
-    'gcc',
-    'gcc-c++',
-    'git',
-    'libffi-devel',
-    'libxslt-devel',
-    'libyaml-devel',
-    'lsof',
-    'nfs-utils',
-    'ncurses-devel',
-    'make',
-    'openssl-devel',
-    'patch',
-    'readline-devel',
-    'sqlite-devel',
-    'zlib-devel',
-    'unzip',
-    'zip',
-    'zlib-devel',
-  ])
-
-  #file { '/home/root':
-  #  ensure => link,
-  #  target => '/root',
-  #}
+  include housekeeping::packages
+  include housekeeping::python
+  include housekeeping::aws
+  include housekeeping::ruby
+  include housekeeping::r10k
 
   housekeeping::user{ 'root': }
-  housekeeping::user{ 'centos': }
+  #housekeeping::user{ 'centos': }
+  housekeeping::user{ $user: }
 
   housekeeping::gemrc{ 'root': }
-  housekeeping::gemrc{ 'centos': }
+  #housekeeping::gemrc{ 'centos': }
+  housekeeping::gemrc{ $user: }
 
 }
