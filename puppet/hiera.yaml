@@ -13,4 +13,5 @@
 
 :yaml:
   #:datadir: "%{settings::manifestdir}/hieradata"
-  :datadir: "/vagrant/puppet/hieradata"
+  #:datadir: "/vagrant/puppet/hieradata"
+  :datadir: "/etc/puppetlabs/code/environments/%{::environment}/hieradata"
