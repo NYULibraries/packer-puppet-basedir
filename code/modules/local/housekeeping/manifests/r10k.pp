@@ -18,7 +18,13 @@ class housekeeping::r10k (
     group  => 'root',
     mode   => '0755',
   }
-  file { '/etc/r10k.yaml' :
+  file { '/etc/puppetlabs/r10k' :
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+  file { '/etc/puppetlabs/r10k/r10k.yaml' :
     ensure => file,
     owner  => 'root',
     group  => 'root',
