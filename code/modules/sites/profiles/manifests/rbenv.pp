@@ -1,7 +1,9 @@
 class profiles::rbenv {
 
   #include housekeeping::rbenv
-  class { 'rbenv': }
+  class { 'rbenv': 
+    require => Package['git'],
+  }
   rbenv::plugin { [ 'rbenv/rbenv-vars', 'rbenv/ruby-build' ]: }
   #rbenv::build { '2.1.3': global      => false }
   #rbenv::build { '1.9.3-p551': global  => false }
