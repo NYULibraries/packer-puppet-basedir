@@ -51,7 +51,7 @@ class housekeeping::aws {
     virtualenv => 'system',
     owner      => 'root',
     timeout    => 1800,
-    require    => Class['housekeeping::python'],
+    #require    => Class['housekeeping::python'],
   }
   ensure_resource( 'package',['r10k'], {
     'provider' => 'gem',

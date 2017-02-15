@@ -16,7 +16,8 @@ class profiles::img_loris (
 ){
 
   include housekeeping
-  include dltsyumrepo::development
+  include housekeeping::aws
+  #include dltsyumrepo::development
 
   # Add default group and users
   group { 'dlib' :
@@ -30,6 +31,13 @@ class profiles::img_loris (
   include loris::cache
   include loris::demo
 
-  #Class['loris::apache']->Class['loris::apache::vhost']->Class['loris']
+  Class['housekeeping']->
+  Class['loris::apache']->
+  Class['loris::apache::vhost']->
+  Class['loris']->
+  Class['loris::cache']->
+  Class['loris::demo']->
+  Class['housekeeping::aws']
+
 
 }

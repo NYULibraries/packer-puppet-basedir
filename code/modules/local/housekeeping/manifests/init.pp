@@ -4,8 +4,8 @@ class housekeeping (
 ) inherits housekeeping::params {
 
   include housekeeping::packages
-  include housekeeping::python
-  include housekeeping::aws
+  #include housekeeping::python
+  #include housekeeping::aws
   include housekeeping::ruby
   include housekeeping::r10k
 
