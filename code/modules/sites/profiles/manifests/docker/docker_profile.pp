@@ -11,7 +11,7 @@
 #
 # Copyright 2016 Your NYULibraries, unless otherwise noted.
 #
-class profiles::docker_profile (
+class profiles::docker::docker_profile (
   #$fsid = hiera('img_iip:fsid'),
 ){
 

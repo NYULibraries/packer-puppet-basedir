@@ -1,4 +1,4 @@
-class profiles::base_docker {
+class profiles::docker::base {
 
     # Processes all yumrepo types  before any packages that
     # don't have 'rpm' as their provider.  Allows epel rpm package

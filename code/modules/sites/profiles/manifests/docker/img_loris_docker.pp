@@ -11,7 +11,7 @@
 #
 # Copyright 2016 Your NYULibraries, unless otherwise noted.
 #
-class profiles::img_loris (
+class profiles::docker::img_loris (
   #$fsid = hiera('img_iip:fsid'),
 ){
 
@@ -25,11 +25,8 @@ class profiles::img_loris (
   }
 
   include loris
-  #include loris::dependencies
-  #include loris::install
   include loris::apache
   include loris::apache::vhost
-  #include loris::demo
 
   Class['loris::apache']->Class['loris::apache::vhost']->Class['loris']
 
