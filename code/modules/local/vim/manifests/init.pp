@@ -20,20 +20,20 @@ class vim (
     group  => 'root',
   } 
   
-  file { "/home/${user}/.vimrc":
-    ensure  => file,
-    source  => 'puppet:///modules/vim/vimrc',
-    owner   => $user,
-    group   => $user,
-  }
-
-  # make directory for vim setup
-  file { "/home/$user/.vim":
-    ensure  => directory,
-    owner  => $user,
-    group  => $user,
-  } 
-  
+  #file { "/home/${user}/.vimrc":
+  #  ensure  => file,
+  #  source  => 'puppet:///modules/vim/vimrc',
+  #  owner   => $user,
+  #  group   => $user,
+  #}
+  #
+  ## make directory for vim setup
+  #file { "/home/$user/.vim":
+  #  ensure  => directory,
+  #  owner  => $user,
+  #  group  => $user,
+  #} 
+  # 
   file {'/tmp/vim-setup.tar.gz':
     mode   => '0755',
     ensure => present,
@@ -45,7 +45,8 @@ class vim (
     command  	=> '/bin/tar zxf /tmp/vim-setup.tar.gz',
     cwd      	=> '/tmp',
     refreshonly => true,
-    notify      => Exec['install vim-setup-root', "install vim-setup-${user}"],
+    #notify      => Exec['install vim-setup-root', "install vim-setup-${user}"],
+    notify      => Exec['install vim-setup-root'],
   }
 
   exec {'install vim-setup-root':
@@ -57,14 +58,14 @@ class vim (
     #notify      => Exec['cleanup vim-setup']
   }
 
-  exec {"install vim-setup-${user}":
-    cwd         => '/tmp/vim-setup/',
-    command     => "/bin/cp -r * /home/${user}/.vim",
-    logoutput   => true,
-    refreshonly => true,
-    require     => File["/home/${user}/.vim"],
-    #notify     => Exec['cleanup vim-setup'],
-  }
+  #exec {"install vim-setup-${user}":
+  #  cwd         => '/tmp/vim-setup/',
+  #  command     => "/bin/cp -r * /home/${user}/.vim",
+  #  logoutput   => true,
+  #  refreshonly => true,
+  #  require     => File["/home/${user}/.vim"],
+  #  #notify     => Exec['cleanup vim-setup'],
+  #}
 
   #exec {'cleanup vim-setup':
   #  command => '/bin/rm -rf /tmp/vim-setup',

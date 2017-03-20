@@ -1,6 +1,6 @@
 class housekeeping::ruby (
-      $user = $loris::params::user
-) inherits loris::params {
+    $user = 'ec2-user'
+) {
 
   class { 'ruby':
     gems_version => 'latest',
@@ -11,5 +11,7 @@ class housekeeping::ruby (
       'gem'     => [ 'no-document' ],
     }
   }
+
+
 
 }

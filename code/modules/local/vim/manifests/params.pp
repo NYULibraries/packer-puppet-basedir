@@ -9,6 +9,7 @@ class vim::params {
             'xenu':       { $user = 'centos' }
             'xenhvm':     { $user = 'centos' }
             'virtualbox': { $user = 'vagrant' }
+            'docker':     { $user = 'root' }
             default:  {
               fail("Virtualization platform ${facts['virtual']} is not supported at this time")
             }

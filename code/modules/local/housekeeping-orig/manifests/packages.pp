@@ -15,6 +15,7 @@ class housekeeping::packages (
     'libxslt-devel',
     'libyaml-devel',
     'lsof',
+    'nfs-utils',
     'ncurses-devel',
     'make',
     'openssl-devel',
@@ -27,7 +28,4 @@ class housekeeping::packages (
     'zlib-devel',
   ])
 
-  ensure_packages([
-    'r10k',
-  ], {'provider' => 'gem'})
 }
