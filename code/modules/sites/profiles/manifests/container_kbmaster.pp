@@ -24,5 +24,6 @@ class profiles::container_kbmaster {
   }
 
   include kubernetes::repo
+  include kubernetes::install::master
 
 }
