@@ -7,7 +7,7 @@ class profiles::build_rpmfactory {
     package => 'java-1.8.0-openjdk-devel',
   }
   #include pyenv
-  pyenv::install { ['vagrant','root']: }
+  #pyenv::install { ['vagrant','root']: }
   #pyenv::compile { 'compile 2.7.11 root' :
   #  user   => 'root',
   #  python => '2.7.11',
