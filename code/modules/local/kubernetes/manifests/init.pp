@@ -23,7 +23,9 @@
 #
 # Copyright 2017 Your name here, unless otherwise noted.
 #
-class kubernetes {
+class kubernetes (
+  $single = $kubernetes::params::single,
+) inherits kubernetes::params {
 
 
 }
