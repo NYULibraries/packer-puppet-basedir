@@ -1,0 +1,14 @@
+{
+  "name": "flannon-spacewalk",
+  "version": "0.1.0",
+  "author": "flannon",
+  "summary": "Install spacewalk",
+  "license": "Apache 2.0",
+  "source": "https://github.com/flannon/puppet-spacewalk",
+  "project_page": "https://github.com/flannon/puppet-spacewalk",
+  "issues_url": "https://github.com/flannon/puppet-spacewalk/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+
