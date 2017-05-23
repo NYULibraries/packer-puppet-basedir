@@ -1,3 +1,3 @@
 [submodule "code/modules/development/dlib_apache_tlon"]
 	path = code/modules/development/dlib_apache_tlon
-	url = ssh://git@v3.es.its.nyu.edu/fj5/dlib_apache_tlon.git
+	url = ssh://git@v3.es.its.nyu.edu/dlts/dlib_apache_tlon.git
