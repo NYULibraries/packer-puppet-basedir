@@ -1,17 +1,17 @@
-# managed by puppet
----
-:backends:
-  - yaml
+version: 5
+defaults:
+  datadir: data
+  data_hash: yaml_data
+hierarchy:
+  - name: "Per-node data (yamle version)"
+    path: "nodes/%{trusted.certname}.yaml"
 
-:logger: console
+  - name: "Other yaml hierarch levels"
+    paths:  # Can specifiy an array of paths insted of just one.
+      - "location/%{facts.whereami}/%{facts.group}.yaml"
+      - "groups/%{facts.group}.yaml"
+      - "os/%{facts.os.family}.yaml"
+      - "classes.yaml"
+      - "accounts.yaml"
+      - "common.yaml"
 
-:hierarchy:
-  - "%{environment}/%{calling_class}"
-  - "%{environment}"
-  - accounts
-  - common
-
-:yaml:
-  #:datadir: "%{settings::manifestdir}/hieradata"
-  #:datadir: "/vagrant/puppet/hieradata"
-  :datadir: "/etc/puppetlabs/code/environments/%{::environment}/hieradata"
