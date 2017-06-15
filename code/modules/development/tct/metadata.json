@@ -9,7 +9,8 @@
   "issues_url": "https://github.com/NYULibraries/puppet-tct/issues",
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"},
-    {"name":"stankevich-python","version_requirement":">= 1.18.2"}
+    {"name":"stankevich-python","version_requirement":">= 1.18.2"},
+    {"name":"voxpupuli-nodejs","version_requirement":">= v3.0.0"}
   ],
   "data_provider": null
 }

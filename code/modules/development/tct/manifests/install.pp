@@ -114,4 +114,41 @@ class tct::install (
     source => "puppet:///modules/tct/requirements-testing.txt",
   }
 
+  #file { "NODESOURCE-GPG-SIGNING-KEY-EL":
+  #  ensure => present,
+  #  path   => '/etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL',
+  #  owner  => 'root',
+  #  group  => 'root',
+  #  mode   => '0644',
+  #}
+
+  #yumrepo { "nodesource":
+  #  ensure   => present,
+  #  descr    => 'Node.js Packages for Enterprise Linux 7 - $basearch',
+  #  baseurl  => 'https://rpm.nodesource.com/pub_7.x/el/7/$basearch',
+  #  enabled  => 1,
+  #  gpgcheck => 1,
+  #  #protect  => 0,
+  #  #gpgkey   => 'file:///etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL',
+  #  gpgkey   => 'https://rpm.nodesource.com/pub/el/NODESOURCE-GPG-SIGNING-KEY-EL',
+  #}
+  #yumrepo { "nodesource-source":
+  #  ensure   => present,
+  #  descr    => 'Node.js for Enterprise Linux 7 - $basearch - Source',
+  #  baseurl  => 'https://rpm.nodesource.com/pub_7.x/el/7/SRPMS',
+  #  enabled  => 0,
+  #  gpgcheck => 1,
+  #  #protect  => 0,
+  #  #gpgkey   => 'file:///etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL',
+  #  gpgkey   => 'https://rpm.nodesource.com/pub/el/NODESOURCE-GPG-SIGNING-KEY-EL',
+  #}
+  class {'nodejs':
+    repo_url_suffix            => '7.x',
+    nodejs_package_name        => 'nodejs-2:7.7.4-1nodesource.el7.centos.x86_64'
+  }
+  package { 'bower':
+    ensure   => '1.8.0',
+    provider => 'npm',
+  }
+
 }
