@@ -19,24 +19,8 @@
 # Copyright 2017 Your name here, unless otherwise noted.
 #
 class tct::install (
-  $user = 'tct',
+  $venv = '/usr/local/lib/virtualenv',
 ){
-
-  # Make the user
-  user { $user :
-    ensure     => present,
-    comment    => "Topic Creation Toolkit",
-    home       => "/home/${$user}",
-    managehome =>  true,
-  }
-
-  file { "/home/${user}/src" :
-    ensure => directory,
-    owner  => $user,
-    group  => $user,
-    mode   =>  '0755',
-  }
-
 
   # Setup python
 
@@ -73,55 +57,60 @@ class tct::install (
     owner      => 'root',
     timeout    => 1800,
   }
-  ##python::virtualenv { "${www_dir}/virtualenv" :
-  ##  ensure                              => present,
-  ##  version                             => '3',
-  ##  systempkgs                          => true,
-  ##  venv_dir                            => "${www_dir}/virtualenv",
-  ##  owner                               => $user,
-  ##  group                               => $user,
-  ##  timeout                             => 0,
-  ##}
-  python::virtualenv { "/usr/local/lib/virtualenv" :
+  python::virtualenv { $venv :
     ensure     => present,
     version    => '3',
     systempkgs => true,
-    venv_dir   => "/usr/local/lib/virtualenv",
+    #venv_dir   => "/usr/local/lib/virtualenv",
+    venv_dir   => $venv,
     owner      => 'root',
     group      => 'root',
     timeout    => 0,
     require => [ Class['python'], Package['python34'] ],
   }
-
+  python::pip { 'psycopg2':
+    ensure     => '2.7.1',
+    pkgname    => 'psycopg2',
+    virtualenv => $venv,
+    owner      => 'root',
+    timeout    => 1800,
+    require    => Class['postgresql::server'],
+  }
   file { "requirements.txt" :
-    path   => "/home/${user}/src/requirements.txt",
+    #path   => "/home/${user}/src/requirements.txt",
     ensure => present,
+    path   => "${venv}/requirements.txt",
     owner  => 'root',
     group  => 'root',
     mode   => "0755",
     source => "puppet:///modules/tct/requirements.txt",
   }
-
-  #python::requirements { "/home/${user}/src/requirements.txt":
-  #  virtualenv => '/usr/local/lib/virtualenv',
-  #  owner      => 'root',
-  #  group      => 'root',
-  #  require    => Python::Virtualenv['/usr/local/lib/virtualenv'],
-  #}
-
-  file { "/home/${user}/src/requirements-documentation.txt" :
+  python::requirements { "${venv}/requirements.txt":
+    virtualenv => $venv,
+    owner      => 'root',
+    group      => 'root',
+    require    => Python::Virtualenv["${venv}"],
+  }
+  file { 'requirements-documentation.txt':
     ensure => present,
-    owner  => $user,
-    group  => $user,
-    mode   => "0755",
+    path   => "${venv}/requirements-documentaiton.txt",
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
     source => "puppet:///modules/tct/requirements-documentation.txt",
   }
-
-  file { "/home/${user}/src/requirements-testing.txt" :
+  python::requirements { "${venv}/requirements-documentation.txt":
+    virtualenv => $venv,
+    owner      => 'root',
+    group      => 'root',
+    require    => Python::Virtualenv["${venv}"],
+  }
+  file { "requirements-testing.txt" :
     ensure => present,
-    owner  => $user,
-    group  => $user,
-    mode   => "0755",
+    path   => "${venv}/requirements-testing.txt",
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
     source => "puppet:///modules/tct/requirements-testing.txt",
   }
 
