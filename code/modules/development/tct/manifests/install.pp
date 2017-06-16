@@ -19,16 +19,23 @@
 # Copyright 2017 Your name here, unless otherwise noted.
 #
 class tct::install (
-  $backend     = $tct::params::backend,
-  $frontend    = $tct::params::frontend,
-  $install_dir = $tct::params::install_dir,
-  $user        = $tct::params::user,
-  $venv        = $tct::params::venv,
-  $db_user     = $tct::params::db_user,
-  $db_password = $tct::params::db_password,
-  $db_host     = $tct::params::db_host,
-  $tct_db      = $tct::params::tct_db,
-  $secret_key  = $tct::params::secret_key,
+  $backend       = $tct::params::backend,
+  $frontend      = $tct::params::frontend,
+  $install_dir   = $tct::params::install_dir,
+  $user          = $tct::params::user,
+  $venv          = $tct::params::venv,
+  $secret_key    = $tct::params::secret_key,
+  $basname       = $tct::params::basename,
+  $baseurl       = $tct::params::baseurl,
+  $www_dir       = $tct::params::www_dir,
+  $allowed_hosts = $tct::params::allowed_hosts,
+  $static_root   = $tct::params::static_root,
+  $media_root    = $tct::params::media_root,
+  $epubs_src_folder = $tct::params::epubs_src_folder,
+  $tct_db        = $tct::params::tct_db,
+  $db_host       = $tct::params::db_host,
+  $db_password   = $tct::params::db_password,
+  $db_user       = $tct::params::db_user,
 ) inherits tct::params {
 
   # Add the user
@@ -62,7 +69,7 @@ class tct::install (
   #}
 
   # Setup python
-  ensure_packages(['python34', 'python34-pip'], {'ensure' => 'present'})
+  ensure_packages(['python34', 'python34-devel', 'python34-pip'], {'ensure' => 'present'})
   #ensure_packages(['centos-release-scl', 'python33'], 
   #                {'ensure'              => 'present'})
 
@@ -112,6 +119,13 @@ class tct::install (
     owner      => 'root',
     timeout    => 1800,
     require    => Class['postgresql::server'],
+  }
+  python::pip { 'uwsgi':
+    ensure     => latest,
+    pkgname    => 'uwsgi',
+    virtualenv => $venv,
+    owner      => 'root',
+    timeout    =>  1800,
   }
   file { "requirements.txt" :
     #path   => "/home/${user}/src/requirements.txt",
