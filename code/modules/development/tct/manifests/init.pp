@@ -21,5 +21,6 @@
 class tct {
   include tct::install
   include tct::install::backend
+  include tct::install::nginx
   include tct::install::frontend
 }
