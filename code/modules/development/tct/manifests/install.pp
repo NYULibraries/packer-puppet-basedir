@@ -19,15 +19,53 @@
 # Copyright 2017 Your name here, unless otherwise noted.
 #
 class tct::install (
-  $venv = '/usr/local/lib/virtualenv',
-){
+  $backend     = $tct::params::backend,
+  $frontend    = $tct::params::frontend,
+  $install_dir = $tct::params::install_dir,
+  $user        = $tct::params::user,
+  $venv        = $tct::params::venv,
+  $db_user     = $tct::params::db_user,
+  $db_password = $tct::params::db_password,
+  $db_host     = $tct::params::db_host,
+  $tct_db      = $tct::params::tct_db,
+  $secret_key  = $tct::params::secret_key,
+) inherits tct::params {
+
+  # Add the user
+  user { $user :
+    ensure     => present,
+    name       => $user,
+    comment    => "Topic Curation Toolkit",
+    home       => $install_dir,
+    managehome => false,
+  }
+
+  file { $install_dir:
+    ensure => directory,
+    owner  => $user,
+    group  => $user,
+    mode   => '0755',
+  }
+
+  # Install the repos
+  vcsrepo { "${install_dir}/${backend}":
+    ensure   => present,
+    provider => git,
+    source   => "https://github.com/NYULibraries/${backend}",
+    revision => $revision,
+  }
+  #vcsrepo { "${install_dir}/${frontend}":
+  #  ensure   => present,
+  #  provider => git,
+  #  source   => "https://github.com/NYULibraries/${frontend}",
+  #  revision => $revision,
+  #}
 
   # Setup python
-
   ensure_packages(['python34', 'python34-pip'], {'ensure' => 'present'})
   #ensure_packages(['centos-release-scl', 'python33'], 
   #                {'ensure'              => 'present'})
-  # setup python
+
   class { 'python':
     version    => 'system',
     pip        => 'present',
@@ -61,7 +99,6 @@ class tct::install (
     ensure     => present,
     version    => '3',
     systempkgs => true,
-    #venv_dir   => "/usr/local/lib/virtualenv",
     venv_dir   => $venv,
     owner      => 'root',
     group      => 'root',
@@ -82,7 +119,7 @@ class tct::install (
     path   => "${venv}/requirements.txt",
     owner  => 'root',
     group  => 'root',
-    mode   => "0755",
+    mode   => "0644",
     source => "puppet:///modules/tct/requirements.txt",
   }
   python::requirements { "${venv}/requirements.txt":
@@ -96,7 +133,7 @@ class tct::install (
     path   => "${venv}/requirements-documentaiton.txt",
     owner  => 'root',
     group  => 'root',
-    mode   => '0755',
+    mode   => '0644',
     source => "puppet:///modules/tct/requirements-documentation.txt",
   }
   python::requirements { "${venv}/requirements-documentation.txt":
@@ -110,45 +147,7 @@ class tct::install (
     path   => "${venv}/requirements-testing.txt",
     owner  => 'root',
     group  => 'root',
-    mode   => '0755',
+    mode   => '0644',
     source => "puppet:///modules/tct/requirements-testing.txt",
   }
-
-  #file { "NODESOURCE-GPG-SIGNING-KEY-EL":
-  #  ensure => present,
-  #  path   => '/etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL',
-  #  owner  => 'root',
-  #  group  => 'root',
-  #  mode   => '0644',
-  #}
-
-  #yumrepo { "nodesource":
-  #  ensure   => present,
-  #  descr    => 'Node.js Packages for Enterprise Linux 7 - $basearch',
-  #  baseurl  => 'https://rpm.nodesource.com/pub_7.x/el/7/$basearch',
-  #  enabled  => 1,
-  #  gpgcheck => 1,
-  #  #protect  => 0,
-  #  #gpgkey   => 'file:///etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL',
-  #  gpgkey   => 'https://rpm.nodesource.com/pub/el/NODESOURCE-GPG-SIGNING-KEY-EL',
-  #}
-  #yumrepo { "nodesource-source":
-  #  ensure   => present,
-  #  descr    => 'Node.js for Enterprise Linux 7 - $basearch - Source',
-  #  baseurl  => 'https://rpm.nodesource.com/pub_7.x/el/7/SRPMS',
-  #  enabled  => 0,
-  #  gpgcheck => 1,
-  #  #protect  => 0,
-  #  #gpgkey   => 'file:///etc/pki/rpm-gpg/NODESOURCE-GPG-SIGNING-KEY-EL',
-  #  gpgkey   => 'https://rpm.nodesource.com/pub/el/NODESOURCE-GPG-SIGNING-KEY-EL',
-  #}
-  class {'nodejs':
-    repo_url_suffix            => '7.x',
-    nodejs_package_name        => 'nodejs-2:7.7.4-1nodesource.el7.centos.x86_64'
-  }
-  package { 'bower':
-    ensure   => '1.8.0',
-    provider => 'npm',
-  }
-
 }

@@ -10,7 +10,9 @@
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"},
     {"name":"stankevich-python","version_requirement":">= 1.18.2"},
-    {"name":"voxpupuli-nodejs","version_requirement":">= v3.0.0"}
+    {"name":"voxpupuli-nodejs","version_requirement":">= v3.0.0"},
+    {"name":"puppetlabs-vcsrepo","version_requirement":">= 1.5.0"},
+    {"name":"voxpupuli-nginx","version_requirement":">= v0.6.0"}
   ],
   "data_provider": null
 }

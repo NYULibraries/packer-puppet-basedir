@@ -28,31 +28,4 @@ class profiles::webapp_tct(
   include tct
 
 
-
-  include nginx
-  nginx::resource::server { 'tct.local':
-    www_root =>  '/var/www/tct.local',
-  }
-    
-  firewall { '100 allow apache access on 80' :
-    dport  => [80, 443],
-    proto  => tcp,
-    action => accept,
-  }
-
-  # postgres
-  include postgresql::server
-  postgresql::server::db { 'testdb':
-    user     => 'testy',
-    password => postgresql_password('testy', 'letmein'),
-  }
-  postgresql::server::role { 'tct':
-    password_hash => postgresql_password('tct', 'letmeout'),
-  }
-  postgresql::server::database_grant {'testy':
-    privilege => 'ALL',
-    db        => 'testdb',
-    role      => 'tct',
-  }
-
 }
