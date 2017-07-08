@@ -11,18 +11,29 @@ define golang::env {
     path => "${userhome}/.bashrc",
     line => 'export GOROOT=/usr/lib/golang',
   }
-  file { "${userhome}/projects" :
-    ensure => directory,
-    owner  => $user,
-    group  => $user,
-    mode   => '0755',
-  }
   file_line { "${userhome} gopath":
     path => "${userhome}/.bashrc",
-    line => "export GOPATH=${userhome}/projects",
+    line => "export GOPATH=${userhome}/go/projects",
+  }
+  file_line { "${userhome} gobin":
+    path => "${userhome}/.bashrc",
+    line => "export GOBIN=${userhome}/go/bin",
   }
   file_line { "${userhome} userpath":
     path => "${userhome}/.bashrc",
     line => 'export PATH=$GOPATH/bin:%GOROOT/bin:$PATH',
+  }
+  $godirs = [
+              "${userhome}/go}", 
+              "${userhome}/go/bin", 
+              "${userhome}/go/pkg", 
+              "${userhome}/go/src", 
+              "${userhome}/go/projects", 
+            ]
+  file { $godirs :
+    ensure => directory,
+    owner  => $user,
+    group  => $user,
+    mode   => '0755',
   }
 }
