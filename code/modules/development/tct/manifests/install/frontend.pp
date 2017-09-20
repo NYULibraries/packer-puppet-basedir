@@ -76,6 +76,7 @@ class tct::install::frontend (
     repo_url_suffix            => '7.x',
     nodejs_package_name        => 'nodejs-2:7.7.4-1nodesource.el7.centos.x86_64'
   }
+
   package { 'bower':
     ensure   => '1.8.0',
     provider => 'npm',
