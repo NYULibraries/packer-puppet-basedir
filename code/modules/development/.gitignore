@@ -1,0 +1,6 @@
+# ignore all
+*
+# except this
+! .gitignore
+#for now except for tct as well
+! tct
