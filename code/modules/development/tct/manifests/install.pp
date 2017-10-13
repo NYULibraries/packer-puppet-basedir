@@ -21,6 +21,7 @@
 class tct::install (
   String $allowed_hosts = lookup('tct::allowed_hosts', String, 'first'),
   String $backend       = lookup('tct::backend', String, 'first'),
+  String $backend_revision = lookup('tct::backend_revision', String, 'first'),
   String $basename      = lookup('tct::basename', String, 'first'),
   String $baseurl       = lookup('tct::baseurl', String, 'first'),
   String $db_host       = lookup('tct::db_host', String, 'first'),
@@ -28,6 +29,7 @@ class tct::install (
   String $db_user       = lookup('tct::db_user', String, 'first'),
   String $epubs_src_folder = lookup('tct::epubs_src_folder', String, 'first'),
   String $frontend      = lookup('tct::frontend', String, 'first'),
+  String $frontend_revision = lookup('tct::frontend_revision', String, 'first'),
   String $install_dir   = lookup('tct::install_dir', String, 'first'),
   String $media_root    = lookup('tct::media_root', String, 'first'),
   String $secret_key    = lookup('tct::secret_key', String, 'first'),
@@ -61,7 +63,7 @@ class tct::install (
     ensure   => present,
     provider => git,
     source   => "https://github.com/NYULibraries/dlts-enm-tct-backend",
-    revision => $revision,
+    revision => $backend_revision,
   }
   #vcsrepo { "${install_dir}/${frontend}":
   #  ensure   => present,
