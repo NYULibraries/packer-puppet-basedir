@@ -1,4 +1,4 @@
-# Class: tct::install::nginx
+# Class: tct::nginx
 # ===========================
 #
 # Full description of class tct here.
@@ -18,7 +18,7 @@
 #
 # Copyright 2017 Your name here, unless otherwise noted.
 #
-class tct::install::nginx (
+class tct::nginx (
   String $allowed_hosts = lookup('tct::allowed_hosts', String, 'first'),
   String $backend       = lookup('tct::backend', String, 'first'),
   String $basename      = lookup('tct::basename', String, 'first'),

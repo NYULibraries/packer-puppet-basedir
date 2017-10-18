@@ -40,8 +40,6 @@ class tct::install (
   String $www_dir       = lookup('tct::www_dir', String, 'first'),
  ){
 
-   alert("Line before error")
-   alert("user: $user")
   # Add the user
   user { $user :
     ensure     => present,
@@ -65,18 +63,18 @@ class tct::install (
     source   => "https://github.com/NYULibraries/dlts-enm-tct-backend",
     revision => $backend_revision,
   }
-  #vcsrepo { "${install_dir}/${frontend}":
-  #  ensure   => present,
-  #  provider => git,
-  #  source   => "https://github.com/NYULibraries/dlts-enm-tct-frontend",
-  #  revision => $revision,
-  #}
-
+  # Install ius-release and python35u
+  include yumrepos::ius
   # Setup python
-  ensure_packages(['python34', 'python34-devel', 'python34-pip'], {'ensure' => 'present'})
-  #ensure_packages(['centos-release-scl', 'python33'], 
-  #                {'ensure'              => 'present'})
-
+  ensure_packages(['python34', 
+                   'python34-devel', 
+                   'python34-pip',
+                   'python34-virtualenv',
+                   'python35u',
+                   'python35u-devel',
+                   'python35u-pip',
+                   ], 
+  {'ensure' => 'present'})
   class { 'python':
     version    => 'system',
     pip        => 'present',
@@ -84,6 +82,7 @@ class tct::install (
     virtualenv => 'present',
     gunicorn   => 'absent',
     use_epel   => true,
+    require    => Class['Yumrepos::Ius'],
   }->
   python::pip { 'pip':
     ensure     => latest,
@@ -106,15 +105,15 @@ class tct::install (
     owner      => 'root',
     timeout    => 1800,
   }
-  python::virtualenv { $venv :
+  python::pyvenv { "$venv" :
     ensure     => present,
-    version    => '3',
+    version    => '3.5',
     systempkgs => true,
     venv_dir   => $venv,
     owner      => 'root',
     group      => 'root',
-    timeout    => 0,
-    require => [ Class['python'], Package['python34'] ],
+    require    => [ Class['python'], Package['python35u'] ],
+    notify     => File["${venv}/requirements.txt"],
   }
   python::pip { 'psycopg2':
     ensure     => '2.7.1',
@@ -122,7 +121,6 @@ class tct::install (
     virtualenv => $venv,
     owner      => 'root',
     timeout    => 1800,
-    #require    => Class['postgresql::server'],
   }
   python::pip { 'uwsgi':
     ensure     => latest,
@@ -131,19 +129,12 @@ class tct::install (
     owner      => 'root',
     timeout    =>  1800,
   }
-  file { "requirements.txt" :
-    ensure => present,
-    path   => "${venv}/requirements.txt",
-    owner  => 'root',
-    group  => 'root',
-    mode   => "0644",
-    source => "puppet:///modules/tct/requirements.txt",
-  }
   python::requirements { "${venv}/requirements.txt":
     virtualenv => $venv,
     owner      => 'root',
     group      => 'root',
-    require    => Python::Virtualenv["${venv}"],
+    #require    => Python::Virtualenv["${venv}"],
+    require    => Python::Pyvenv["${venv}"],
   }
   file { 'requirements-documentation.txt':
     ensure => present,
@@ -157,14 +148,6 @@ class tct::install (
     virtualenv => $venv,
     owner      => 'root',
     group      => 'root',
-    require    => Python::Virtualenv["${venv}"],
-  }
-  file { "requirements-testing.txt" :
-    ensure => present,
-    path   => "${venv}/requirements-testing.txt",
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
-    source => "puppet:///modules/tct/requirements-testing.txt",
+    require    => Python::Pyvenv["${venv}"],
   }
 }

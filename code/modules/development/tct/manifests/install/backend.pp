@@ -102,6 +102,9 @@ class tct::install::backend (
     mode   => '0777',
   }
 
+  #
+  # Actually, data should be oaded manually
+  #
   # Hold your nose, do the exec thing, and run the python installer,
   #  python manage.py loaddata indexpatterns.json
   # see: dlts-enm-tct-backend/documentation/site/setup/index.html

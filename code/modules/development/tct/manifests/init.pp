@@ -22,6 +22,12 @@ class tct {
   alert('Beginning install of the refreshed tct-2')
   include tct::install
   include tct::install::backend
-  include tct::install::nginx
   include tct::install::frontend
+  #include tct::nginx
+
+  Class[tct::install]->
+  Class[tct::install::backend]->
+  Class[tct::install::frontend]
+ #Class[tct::nginx]
+
 }
