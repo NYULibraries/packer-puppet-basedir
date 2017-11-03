@@ -91,13 +91,13 @@ class tct::install (
     owner      => 'root',
     timeout    => 1800,
   }->
-  python::pip { 'virtualenv':
-    ensure     => latest,
-    pkgname     => 'virtualenv',
-    virtualenv => 'system',
-    owner      => 'root',
-    timeout    => 1800,
-  }->
+  #python::pip { 'virtualenv':
+  #  ensure     => latest,
+  #  pkgname     => 'virtualenv',
+  #  virtualenv => 'system',
+  #  owner      => 'root',
+  #  timeout    => 1800,
+  #}->
   python::pip { 'setuptools':
     ensure     => latest,
     pkgname    => 'setuptools',
@@ -108,27 +108,98 @@ class tct::install (
   python::pyvenv { "$venv" :
     ensure     => present,
     version    => '3.5',
-    systempkgs => true,
+    systempkgs => false,
     venv_dir   => $venv,
     owner      => 'root',
     group      => 'root',
     require    => [ Class['python'], Package['python35u'] ],
     notify     => File["${venv}/requirements.txt"],
   }
-  python::pip { 'psycopg2':
-    ensure     => '2.7.1',
-    pkgname    => 'psycopg2',
-    virtualenv => $venv,
-    owner      => 'root',
-    timeout    => 1800,
-  }
-  python::pip { 'uwsgi':
-    ensure     => latest,
-    pkgname    => 'uwsgi',
-    virtualenv => $venv,
-    owner      => 'root',
-    timeout    =>  1800,
-  }
+  #python::pip { 'django' :
+  #  ensure     => '1.11.6',
+  #  pkgname    => 'django',
+  #  virtualenv => $venv,
+  #  owner      => 'root',
+  #  timeout    => 1800,
+  #}
+  #python::pip { 'django-allauth' :
+  #  ensure     => '0.34.0',
+  #  pkgname    => 'django-allauth',
+  #  virtualenv => $venv,
+  #  owner      => 'root',
+  #  timeout    => 1800,
+  #}
+  #python::pip { 'django-autoslug' :
+  #  ensure     => '1.9.3',
+  #  pkgname    => 'django-autoslug',
+  #  virtualenv => $venv,
+  #  owner      => 'root',
+  #  timeout    => 1800,
+  #}
+  #python::pip { 'django-cors-headers' :
+  #  ensure     => '2.1.0',
+  #  pkgname    => 'django-cors-headers',
+  #  virtualenv => $venv,
+  #  owner      => 'root',
+  #  timeout    => 1800,
+  #}
+  #python::pip { 'django-debug-toolbar' :
+  #  ensure     => '1.5',
+  #  pkgname    => 'django-debug-toolbar',
+  #  virtualenv => $venv,
+  #  owner      => 'root',
+  #  timeout    => 1800,
+  #}
+  #python::pip { 'django-extensions' :
+  #  ensure     => '1.9.7',
+  #  pkgname    => 'django-extensions',
+  #  virtualenv => $venv,
+  #  owner      => 'root',
+  #  timeout    => 1800,
+  #}
+  #python::pip { 'django-filter' :
+  #  ensure     => '0.14.0',
+  #  pkgname    => 'django-filter',
+  #  virtualenv => $venv,
+  #  owner      => 'root',
+  #  timeout    => 1800,
+  #}
+  # ??? or is it dango-rest-framework?
+  #python::pip { 'djangorestframework' :
+  #  ensure     => '3.7.1',
+  #  pkgname    => 'djangorestframework',
+  #  virtualenv => $venv,
+  #  owner      => 'root',
+  #  timeout    => 1800,
+  #}
+  #python::pip { 'django-rest-auth' :
+  #  ensure     => '0.8.1',
+  #  pkgname    => 'django-rest-auth',
+  #  virtualenv => $venv,
+  #  owner      => 'root',
+  #  timeout    => 1800,
+  #}
+  #python::pip { 'lxml' :
+  #  ensure     => '3.6.4',
+  #  pkgname    => 'lxml',
+  #  virtualenv => $venv,
+  #  owner      => 'root',
+  #  timeout    => 1800,
+  #}
+  #python::pip { 'psycopg2' :
+  #  ensure     => '2.7.3.2',
+  #  pkgname    => 'psycopg2',
+  #  virtualenv => $venv,
+  #  owner      => 'root',
+  #  timeout    => 1800,
+  #}
+  #  python::pip { 'uwsgi':
+  #  ensure     => latest,
+  #  pkgname    => 'uwsgi',
+  #  virtualenv => $venv,
+  #  owner      => 'root',
+  #  timeout    =>  1800,
+  #}
   python::requirements { "${venv}/requirements.txt":
     virtualenv => $venv,
     owner      => 'root',
